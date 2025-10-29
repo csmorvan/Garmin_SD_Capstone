@@ -3,7 +3,7 @@
 // Subject to Garmin SDK License Agreement and Wearables
 // Application Developer Agreement.
 //
-//TESTING//////
+
 using Toybox.Application as App;
 using Toybox.System;
 using Toybox.Timer;
