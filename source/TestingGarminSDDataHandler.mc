@@ -238,4 +238,4 @@ class GarminSDDataHandler {
     // Send simulated data to the comms handler
     mComms.sendAccelData();
   }
-}
+} 
