@@ -105,10 +105,19 @@ class GarminSDComms {
   }
 
   // Receive the data from the web request - should be a json string
-  function onSdStatusReceive(responseCode as Number, data as Dictionary<String, String>) as Void {
+  // MODIFIED LINE 98:
+  function onSdStatusReceive(responseCode as Number, data as Dictionary or String or Null) as Void {
     var tagStr = "SDComms.onSdStatusReceive";
     // writeLog(tagStr, "ResponseCode="+responseCode);
     if (responseCode == 200) {
+
+      // ADDED TYPE CHECK (Lines 104-109):
+      if (!(data instanceof Dictionary)) {
+        writeLog(tagStr, "Received 200 but data is not a Dictionary.");
+        mAccelHandler.mStatusStr = Ui.loadResource(Rez.Strings.Error_abbrev) + ": DataErr";
+        return;
+      }
+      
       if (responseCode != lastOnSdStatusReceiveResponse) {
         needs_update = true;
         // writeLog(tagStr, "needs update 1");

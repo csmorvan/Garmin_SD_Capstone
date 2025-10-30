@@ -25,9 +25,12 @@ class MemTestApp extends App.AppBase {
   function onStop(state as Dictionary or Null) {
   }
 
-  function getInitialView() as Array<Toybox.WatchUi.Views or Toybox.WatchUi.InputDelegates> or Null {
+  // --- THIS IS THE CORRECTED FUNCTION ---
+  // Removed the 'as Array<...>' return type signature
+  // and the 'as Array<...>' cast on the return.
+  function getInitialView() {
     var mainView = new MemTestView();
-    return [mainView] as Array<Toybox.WatchUi.InputDelegates or Toybox.WatchUi.Views>;
+    return [mainView];
   }
 
 }
@@ -69,15 +72,15 @@ class MemTestView extends Ui.View {
 
     // Try makeWebRequest instead to see if that avoids the memory leak
     /*Comm.makeWebRequest(
-			"http:192.168.0.84:8080/data",
-			{
-			  "dataType" => "raw",
-			    "data" => [1,2,3,4,5,6,7,8,9,10]
-			    },
-			{
-			  "Content-Type" => Comm.REQUEST_CONTENT_TYPE_URL_ENCODED
-			    },
-			method(:onReceive));
+      "http:1192.168.0.84:8080/data",
+      {
+        "dataType" => "raw",
+          "data" => [1,2,3,4,5,6,7,8,9,10]
+          },
+      {
+        "Content-Type" => Comm.REQUEST_CONTENT_TYPE_URL_ENCODED
+          },
+      method(:onReceive));
     */
     Ui.requestUpdate(); 
   }
@@ -98,13 +101,13 @@ class MemTestView extends Ui.View {
     System.println("GarminSDView.onUpdate()");
     var dateTime = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
     var timeString = format(
-				 "$1$:$2$:$3$",
-				 [
-				  dateTime.hour.format("%02d"),
-				  dateTime.min.format("%02d"),
-				  dateTime.sec.format("%02d")
-				  ]
-				 );
+         "$1$:$2$:$3$",
+         [
+          dateTime.hour.format("%02d"),
+          dateTime.min.format("%02d"),
+          dateTime.sec.format("%02d")
+          ]
+         );
     var sysStats = System.getSystemStats();
     var batString = format("Bat = $1$%",[sysStats.battery.format("%02.0f")]);
     var memStr = format("Mem = $1$",[sysStats.freeMemory]);
@@ -113,13 +116,13 @@ class MemTestView extends Ui.View {
     dc.clear();
     dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_TRANSPARENT);
     dc.drawText(width / 2,  40, Gfx.FONT_SYSTEM_NUMBER_HOT, timeString,
-		Gfx.TEXT_JUSTIFY_CENTER);
+    Gfx.TEXT_JUSTIFY_CENTER);
     dc.drawText(width / 2,  85, Gfx.FONT_LARGE, batString,
-		Gfx.TEXT_JUSTIFY_CENTER);
+    Gfx.TEXT_JUSTIFY_CENTER);
     dc.drawText(width / 2,  130, Gfx.FONT_LARGE, usedMemStr,
-		Gfx.TEXT_JUSTIFY_CENTER);
+    Gfx.TEXT_JUSTIFY_CENTER);
     dc.drawText(width / 2,  160, Gfx.FONT_LARGE, memStr,
-		Gfx.TEXT_JUSTIFY_CENTER);
+    Gfx.TEXT_JUSTIFY_CENTER);
   }
   
   
@@ -128,4 +131,3 @@ class MemTestView extends Ui.View {
     myTimer.stop();
   }
 }
-
