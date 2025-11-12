@@ -87,8 +87,8 @@ class GarminSDView extends Ui.View {
     height = dc.getHeight();
     // Nominal height of display for positioning text - values are for a 240px high display.
     var heightScale = height / 240.0;
-    heightScaleLine1=heightScale*20;
-    heightScaleLine2=heightScale*45;
+    heightScaleLine1=heightScale*25;
+    heightScaleLine2=heightScale*50;
     heightScaleLine3=heightScale*120;
     heightScaleLine4=heightScale*150;
     heightScaleLine5=heightScale*180;
@@ -164,13 +164,13 @@ class GarminSDView extends Ui.View {
       halfWidth,
       0,
       Gfx.FONT_MEDIUM,
-      "OpenSeizure",
+      "SeizeWatch",
       Gfx.TEXT_JUSTIFY_CENTER
     );
     dc.drawText(
       halfWidth,
       heightScaleLine1,
-      Gfx.FONT_MEDIUM,
+      Gfx.FONT_SMALL,
       "Detector",
       Gfx.TEXT_JUSTIFY_CENTER
     );
