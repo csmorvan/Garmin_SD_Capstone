@@ -157,9 +157,9 @@ class GarminSDView extends Ui.View {
       sysStats.battery.format("%02.0f"),
     ]);
 
-    dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_WHITE);
+    dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
     dc.clear();
-    dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_TRANSPARENT);
+    dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
     dc.drawText(
       halfWidth,
       0,
