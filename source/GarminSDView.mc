@@ -54,9 +54,11 @@ class GarminSDView extends Ui.View {
     writeLog("GarminSDView.initialize()", "");
     View.initialize();
     mSdState = sdState;
-    accelHandler = new GarminSDDataHandler(
-      Ui.loadResource(Rez.Strings.VersionId).toString()
-    );
+    //accelHandler = new GarminSDDataHandler(     //commenting out to get rid of version # on UI
+     // Ui.loadResource(Rez.Strings.VersionId).toString()
+    //);
+    accelHandler = new GarminSDDataHandler(""); //blank text
+
     //loading resources locally
     beatsPerMinuteAbbrev = Ui.loadResource(Rez.Strings.Beats_per_minute_abbrev).toString();
     batteryAbbrev = Ui.loadResource(Rez.Strings.Battery_abbrev).toString();
@@ -88,10 +90,10 @@ class GarminSDView extends Ui.View {
     // Nominal height of display for positioning text - values are for a 240px high display.
     var heightScale = height / 240.0;
     heightScaleLine1=heightScale*25;
-    heightScaleLine2=heightScale*50;
-    heightScaleLine3=heightScale*120;
-    heightScaleLine4=heightScale*150;
-    heightScaleLine5=heightScale*180;
+    heightScaleLine2=heightScale*70;
+    heightScaleLine3=heightScale*150;
+    heightScaleLine4=heightScale*200;
+    heightScaleLine5=heightScale*220;
     //precalculate font size
     // There is an issue with some devices having different font sizes, so
     // we check the width of the text for our preferred font size, and if it is too long
@@ -138,19 +140,15 @@ class GarminSDView extends Ui.View {
     ]);
     var sysStats = System.getSystemStats();
     var hrO2Str = "";
-    if (accelHandler.mO2SensorIsEnabled == true){
-        hrO2Str = Lang.format("$1$ $2$ / $3$% Ox", [
-          accelHandler.mHR,
-          beatsPerMinuteAbbrev,
-          accelHandler.mO2sat,
-        ]);
-    }
-    else {
-        hrO2Str = Lang.format("$1$ $2$", [
-          accelHandler.mHR,
-          beatsPerMinuteAbbrev,
-        ]);
-    }
+    var hrStr = Lang.format("$1$ $2$", [
+      accelHandler.mHR,
+      beatsPerMinuteAbbrev,
+    ]);
+
+    var oxStr = "";
+      if (accelHandler.mO2SensorIsEnabled == true) {
+      oxStr = Lang.format("$1$% Ox", [accelHandler.mO2sat]);
+      }
 
     var hrBatStr = Lang.format("$1$: $2$%", [
       batteryAbbrev,
@@ -185,7 +183,14 @@ class GarminSDView extends Ui.View {
       halfWidth,
       heightScaleLine3,
       fontHrO2Str,
-      hrO2Str,
+      hrStr,
+      Gfx.TEXT_JUSTIFY_CENTER
+    );
+    dc.drawText(
+      halfWidth,
+      heightScaleLine3 + 40, // adjust spacing as needed for Ox line
+      fontHrO2Str,
+      oxStr,
       Gfx.TEXT_JUSTIFY_CENTER
     );
     dc.drawText(
